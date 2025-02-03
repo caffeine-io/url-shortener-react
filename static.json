@@ -1,0 +1,10 @@
+{
+  "routes": {
+    "/*": {
+      "origin": "https://url-shortener-g7bp.onrender.com",
+      "headers": {
+        "Cache-Control": "no-cache"
+      }
+    }
+  }
+}
