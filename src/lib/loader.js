@@ -24,7 +24,7 @@ export const createShortUrlAction = async ({ request }) => {
 export const redirectLoader = async ({ params }) => {
   console.log(params);
   try {
-    const response = await fetch(`/api/urls/${params.shortId}`);
+    const response = await fetch(`${apiUrl}/api/urls/${params.shortId}`);
     if (!response.ok) {
       throw new Response("Not Found", { status: 404 });
     }
