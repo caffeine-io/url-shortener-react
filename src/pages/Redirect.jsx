@@ -3,15 +3,9 @@ import { useEffect } from "react";
 
 export default function Redirect() {
   const originalUrl = useLoaderData();
-  console.log(originalUrl);
   useEffect(() => {
     if (originalUrl) {
-      try {
-        new URL(originalUrl);
-        window.location.replace(originalUrl);
-      } catch {
-        window.location.replace("/?error=invalid-url");
-      }
+      window.location.replace(originalUrl);
     }
   }, [originalUrl]);
 

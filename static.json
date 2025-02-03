@@ -1,9 +1,9 @@
 {
   "routes": {
     "/*": {
-      "origin": "https://url-shortener-g7bp.onrender.com",
+      "origin": "/index.html",
       "headers": {
-        "Cache-Control": "no-cache"
+        "Cache-Control": "no-cache, no-store, must-revalidate"
       }
     }
   }
