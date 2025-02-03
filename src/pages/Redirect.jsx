@@ -2,7 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function Redirect() {
-  const { originalUrl } = useLoaderData();
+  const originalUrl = useLoaderData();
   useEffect(() => {
     if (originalUrl) {
       window.location.replace(originalUrl);
