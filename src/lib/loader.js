@@ -29,8 +29,8 @@ export const redirectLoader = async ({ params }) => {
       throw new Response("Not Found", { status: 404 });
     }
 
-    const data = await response.json();
-    return data;
+    const { originalUrl } = await response.json();
+    return originalUrl;
   } catch (error) {
     throw new Error("Failed to load URL", error);
   }
