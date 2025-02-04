@@ -1,10 +1,13 @@
 {
+  "headers": {
+    "/*": {
+      "Cache-Control": "no-cache, no-store, must-revalidate"
+    }
+  },
   "routes": {
     "/*": {
       "origin": "/index.html",
-      "headers": {
-        "Cache-Control": "no-cache, no-store, must-revalidate"
-      }
+      "status": 200
     }
   }
 }
