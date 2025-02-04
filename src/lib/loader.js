@@ -23,11 +23,7 @@ export const createShortUrlAction = async ({ request }) => {
 
 export const redirectLoader = async ({ params }) => {
   try {
-    const response = await fetch(
-      `https://url-shortener-g7bp.onrender.com/api/urls/${
-        params.shortId
-      }?ts=${Date.now()}`
-    );
+    const response = await fetch(`${apiUrl}/api/urls/${params.shortId}`);
     if (!response.ok) {
       throw new Response("Not Found", { status: 404 });
     }
