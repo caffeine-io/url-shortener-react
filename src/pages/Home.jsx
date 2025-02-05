@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -15,7 +14,6 @@ export default function HomePage() {
   const handleCopy = () => {
     navigator.clipboard.writeText(`${host}/${actionData.shortUrl}`);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -28,11 +26,14 @@ export default function HomePage() {
           <Form method="post" className="space-y-4">
             <div>
               <input
-                type="url"
+                type="text"
                 name="url"
                 placeholder="Enter your URL here"
-                required
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full px-4 py-2 border rounded-md focus:outline-none ${
+                  actionData?.error
+                    ? "border-red-500 ring-2 ring-red-200"
+                    : "focus:ring-2 focus:ring-blue-500"
+                }`}
               />
             </div>
 

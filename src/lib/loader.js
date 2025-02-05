@@ -2,20 +2,23 @@ export const apiUrl = import.meta.env.VITE_BASE_URL;
 
 export const createShortUrlAction = async ({ request }) => {
   const formData = await request.formData();
-  const url = formData.get("url");
+  const url = formData.get("url").trim();
+  if (!url) {
+    return { error: "Please enter a URL" };
+  }
+
   try {
     const response = await fetch(`${apiUrl}/api/urls`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ originalUrl: url }),
     });
+    const data = await response.json();
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Failed to create short URL");
+      const zodError = data.errors?.[0]?.message || "Please enter a valid URL";
+      return { error: zodError };
     }
-    const shortUrl = await response.json();
-    console.log(shortUrl);
-    return shortUrl;
+    return data;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -24,13 +27,20 @@ export const createShortUrlAction = async ({ request }) => {
 export const redirectLoader = async ({ params }) => {
   try {
     const response = await fetch(`${apiUrl}/api/urls/${params.shortId}`);
-    if (!response.ok) {
-      throw new Response("Not Found", { status: 404 });
+    if (response.status === 404) {
+      throw new Response("Not Found", {
+        status: 404,
+        statusText: "Short URL not found",
+      });
     }
-
-    const originalUrl = await response.json();
-    return originalUrl;
+    return await response.json();
   } catch (error) {
-    throw new Error("Failed to load URL", error);
+    if (error instanceof Response) {
+      throw error;
+    }
+    throw new Response("Error", {
+      status: 500,
+      statusText: "Internal server error",
+    });
   }
 };
