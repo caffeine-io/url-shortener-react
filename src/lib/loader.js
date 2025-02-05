@@ -1,3 +1,5 @@
+import { isValidURL } from "../utils/urlValidator";
+
 export const apiUrl = import.meta.env.VITE_BASE_URL;
 
 export const createShortUrlAction = async ({ request }) => {
@@ -6,7 +8,9 @@ export const createShortUrlAction = async ({ request }) => {
   if (!url) {
     return { error: "Please enter a URL" };
   }
-
+  if (!isValidURL(url)) {
+    return { error: "Please enter a valid URL (e.g., https://example.com)" };
+  }
   try {
     const response = await fetch(`${apiUrl}/api/urls`, {
       method: "POST",
